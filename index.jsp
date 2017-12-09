@@ -11,9 +11,9 @@
 <script type="text/javascript" src="sou/easyui/jquery.easyui.min.js"></script>
 </head>
 <body>
-	<h2>CheckBox Tree</h2>
+	<h2>CheckBox Tree中</h2>
 	<p>Tree nodes with check boxes.</p>
-
+<a href="NewFile.html">g在</a>
 	<div style="margin: 20px 0;">
 		<a href="#" class="easyui-linkbutton" onclick="getChecked()">GetChecked</a>
 	</div>
@@ -30,9 +30,14 @@
 		<ul id="tt" class="easyui-tree"
 			data-options="url:'sou/easyui/demo/tree/tree_data1.json',checkbox:true"></ul>
 	</div>
-	
 	</div>
 	
+	<body>
+  <table border=1 id="tab">
+  <tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+  <tr><td id="cc1">1997</td><td>Ford</td><td>E350</td><td>"ac</td><td> abs</td><td> moon"</td><td>3000.00</td></tr>
+  <tr><td id="cc2">1997</td><td>Ford</td><td>E350</td><td>"ac</td><td> abs</td><td> moon"</td><td>3000.00</td></tr>
+  </table>
 	<script type="text/javascript">
 	  $(function() {
 		  $('#dlg').dialog( {
@@ -44,12 +49,28 @@
 				  buttons : [{
 					  text : 'OK',
 					  handler : function(){
-						  getChecked();
-						  $('#dlg').dialog('close');
+						  var s = getChecked();
+						  var ss = s.split(',');
+						  if(s != '') {
+							  for(var i=0; i<ss.length; i++) {
+								  var td = '';
+								  td += "<tr><td>1997</td><td>Ford</td><td>E350</td>";
+								  td +="<td onClick='getDel(this)'><a href='#'>cleck</a></td>"; 
+								  td +="</tr>"
+								  $('#tab').append(td);
+							      var text = $("#tab tr:last").find("td:nth-child(1)").text(ss[i]); 
+								  }
+						  }
+						  	var root=$("#tt").tree('getRoot');  
+						  	console.info(root.target);
+					        $("#tt").tree('uncheck',root.target); 
+						    $('#dlg').dialog('close');
 					  }
 				  },{
 					  text : 'claer',
 					  handler : function(){
+						  var root=$("#tt").tree('getRoot'); 
+					      $("#tt").tree('uncheck',root.target); 
 						  $('#dlg').dialog('close');
 					  }
 				  }]
@@ -82,9 +103,12 @@
           if (s != '') s += ',';
           s += nodes[i].text;
         }
-        alert(s);
+        return s;
       }
-
+      function getDel(obj)
+      { 
+        $(obj).parent().remove(); 
+      } 
       
     </script>
 </body>
